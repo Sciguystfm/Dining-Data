@@ -1,3 +1,6 @@
+from api import app,db
+from models import Transaction
+
 from selenium import webdriver
 import time
 from dateutil import parser as dateparser
@@ -27,13 +30,10 @@ def get_eservices(username,password):
 
     return driver
 
-def post_transaction(t):
-    requests.post("http://localhost:5000/transactions",data={
-        "date":t["date"],
-        "amount":t["amt"],
-        "description":t["ld"],
-        "curBal":t["bal"]
-    })
+def save_tx(t, username):
+    new_trans = Transaction(description=t["ld"],amount=int(t["amt"]),date=dateparser.parse(t["date"]),curBal=float(t["bal"]),username=username)
+    db.session.add(new_trans)
+    db.session.commit()
 
 
 def get_transactions(username,password,start,end):
@@ -52,20 +52,11 @@ def get_transactions(username,password,start,end):
 
 
     driver.get("https://sis.rit.edu/portalServices/foodtransactionsajax.do?sdate="+starttime.strftime("%m%d%Y")+"&edate="+endtime.strftime("%m%d%Y")+"&_="+str(int(nowtime.strftime('%s'))*1000))
-    # import pdb; pdb.set_trace()
 
     ret = json.loads(driver.find_element_by_xpath("//pre").get_attribute('innerHTML'))["customer"]["transactions"][0]["food"]["transactions"]
-    #import pdb; pdb.set_trace()
+    #console.log(ret)
     return ret
 
-
-
-parser = argparse.ArgumentParser(description='Add a users transactions to database')
-parser.add_argument("username", help='RIT Username')
-parser.add_argument("password", help='RIT Username')
-parser.add_argument("sdate", help='Start Date')
-parser.add_argument("edate", help='End Date')
-args = parser.parse_args()
-
-for transaction in get_transactions(args.username,args.password,args.sdate,args.edate):
-    post_transaction(transaction)
+def scrape(username, password, sdate, edate):
+    for transaction in get_transactions(username,password,sdate,edate):
+        save_tx(transaction, username)

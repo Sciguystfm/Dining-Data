@@ -1,10 +1,146 @@
-$.ajax({
-    url: "http://localhost:5000/transactions",
-    cache: false,
-    success: function(transactions) {
-        getData(transactions.transactions)
-    }
-});
+$(function() {
+    swal({
+        title: 'RIT Username',
+        type: 'input',
+        showCancelButton: false,
+        closeOnConfirm: false,
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        showCancelButton: false
+    }, function gotUsername(username) {
+        swal({
+            title: 'Action',
+            text: 'Do you want to update your transactions now?',
+            showCancelButton: true,
+            showConfirmButton: true,
+            cancelButtonText: 'No',
+            confirmButtonText: 'Fuck yes',
+            closeOnConfirm: false,
+            closeOnCancel: false,
+            showLoaderOnConfirm: false
+        }, function(isConfirm) {
+            //Get new transactions
+            if (isConfirm) {
+                swal({
+                    title: 'RIT Password',
+                    text: '',
+                    type: 'input',
+                    inputType: 'password',
+                    showCancelButton: false,
+                    closeOnConfirm: false,
+                    showConfirmButton: true,
+                    showLoaderOnConfirm: false
+                }, function(password) {
+                    $.ajax({
+                        url: "http://localhost:5000/scrape",
+                        headers: {
+                            authorization: 'Basic ' + btoa(username + ':' + password)
+                        },
+                        data: {
+                            sdate: '09/01/2015',
+                            edate: '04/28/2016'
+                        },
+                        cache: false,
+                        success: function(transactions) {
+                            showLoadData(username)
+                        },
+                        error: swal({
+                            title: "Something went wrong",
+                            text: "Make sure you're connected to the internet and your Username/Password is correct",
+                            type: "error",
+                            showLoaderOnConfirm: false
+                        }, attemptLogin())
+
+                    });
+                })
+                //display old data
+            } else {
+                showLoadData(username)
+            }
+        })
+    })
+})
+
+function showLoadData(username) {
+    swal({
+        title: 'User Authenticated',
+        text: 'Click okay to load your data',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Load',
+        showLoaderOnConfirm: true
+    }, function() {
+        $.ajax({
+            url: "http://localhost:5000/transaction/" + username,
+            cache: false,
+            success: function(transactions) {
+                getData(transactions.transactions);
+                swal('Done!');
+            }
+        });
+    })
+}
+
+function attemptLogin() {
+    swal({
+        title: 'RIT Username',
+        type: 'input',
+        showCancelButton: false,
+        closeOnConfirm: false,
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        showCancelButton: false
+    }, function gotUsername(username) {
+        swal({
+            title: 'Action',
+            text: 'Do you want to scrape your transactions now?',
+            showCancelButton: true,
+            showConfirmButton: true,
+            cancelButtonText: 'No',
+            confirmButtonText: 'Fuck yes',
+            closeOnConfirm: false,
+            closeOnCancel: false,
+            showLoaderOnConfirm: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                swal({
+                    title: 'RIT Password',
+                    text: '',
+                    type: 'input',
+                    inputType: 'password',
+                    showCancelButton: false,
+                    closeOnConfirm: false,
+                    showConfirmButton: true,
+                    showLoaderOnConfirm: true
+                }, function(password) {
+                    $.ajax({
+                        url: "http://localhost:5000/scrape",
+                        headers: {
+                            authorization: 'Basic ' + btoa(username + ':' + password)
+                        },
+                        data: {
+                            sdate: '09/01/2015',
+                            edate: '04/28/2016'
+                        },
+                        cache: false,
+                        success: function(transactions) {
+                            showLoadData(username)
+                        },
+                        error: swal({
+                            title: "Something went wrong",
+                            text: "Make sure you're connected to the internet and your Username/Password is correct",
+                            type: "error",
+                            showLoaderOnConfirm: false
+                        }, attemptLogin())
+
+                    });
+                })
+            } else {
+                showLoadData(username)
+            }
+        })
+    })
+}
 
 
 var x1 = ['x1']

@@ -10,7 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
     <script src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js" integrity="sha256-xI/qyl9vpwWFOXz7+x/9WkG5j/SVnSw21viy8fWwbeE=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
-
+    <script src="sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="sweetalert.css">
     <meta charset="utf-8">
     <title>c3.js Graphs!</title>
 </head>
@@ -31,12 +32,12 @@
     <script src="chartdata.js"></script>
 
     <script>
-
-        function getCurrentClass(selector){
-          return _.filter(_.split(selector.attr('class'),' '), function(cls){
-            return cls !== 'c3'
-          })[0]
+        function getCurrentClass(selector) {
+            return _.filter(_.split(selector.attr('class'), ' '), function(cls) {
+                return cls !== 'c3'
+            })[0]
         }
+
         function bothB() {
             var line = $('#lineChart');
             var pie = $('#pieChart');
@@ -47,14 +48,15 @@
             pie.toggleClass("half")
 
             chart.resize({
-                height: ($('#chartHolder').height() / 2)-15,
-                width: ($('#chartHolder').width())-15
+                height: ($('#chartHolder').height() / 2) - 15,
+                width: ($('#chartHolder').width()) - 15
             })
             pieChart.resize({
-                height: ($('#chartHolder').height() / 2)-15,
-                width: ($('#chartHolder').width())-15
-              })
+                height: ($('#chartHolder').height() / 2) - 15,
+                width: ($('#chartHolder').width()) - 15
+            })
         }
+
         function pieB() {
             var line = $('#lineChart');
             var pie = $('#pieChart');
@@ -64,8 +66,8 @@
             pie.toggleClass(getCurrentClass(pie))
             pie.toggleClass("full")
             pieChart.resize({
-              height: ($('#chartHolder').height())-15,
-              width: ($('#chartHolder').width())-15
+                height: ($('#chartHolder').height()) - 15,
+                width: ($('#chartHolder').width()) - 15
             })
         }
 
@@ -78,8 +80,8 @@
             pie.toggleClass(getCurrentClass(pie))
             pie.toggleClass("none")
             chart.resize({
-              height: ($('#chartHolder').height())-15,
-              width: ($('#chartHolder').width())-15
+                height: ($('#chartHolder').height()) - 15,
+                width: ($('#chartHolder').width()) - 15
             })
 
         }

@@ -7,3 +7,4 @@ class Transaction(db.Model):
     amount=db.Column(db.Numeric)
     date=db.Column(db.DateTime)
     curBal=db.Column(db.Numeric)
+    username=db.Column(db.String(300))
