@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.1/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.1/lodash.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css"
+  <meta charset="utf-8">
+  <title>Graphs!</title>
+</head>
+<body>
+
+  <div id="lineChart">
+    <canvas id="myChart" width="400" height="400"></canvas>
+  </div>
+  <script>
+  var ctx = $("#myChart").get(0).getContext("2d");
+
+  function create_chart(transactions){
+    var fall={};
+    var spring={}
+    _.forEach(_.reverse(transactions),function(transaction){
+
+
+      var day=moment(transaction.date).startOf(day)
+      var daystr=day.format("ddd, MMMM DD, YYYY")
+      var startday=moment("2015-12-18")
+      var endday=moment("2015-12-21")
+      if (day.isBefore(startday)){
+        fall[daystr]=transaction.curBal
+      }
+      else if (day.isAfter(endday)) {
+        spring[daystr]=transaction.curBal
+      }
+    })
+    var data={
+      labels: _.keys(fall).concat(_.keys(spring)),
+      datasets: [
+        {
+          label: "Fall Semester",
+          data: _.values(fall),
+          backgroundColor:"rgba(255, 255, 153,.5)"
+
+        },
+        {
+          label:"Spring Semester",
+          data: _.times(_.values(fall).length,function(){return 0}).concat(_.values(spring)),
+          backgroundColor:"rgba(204, 153, 255,.5)"
+        }
+      ]
+    }
+
+    var myLineChart = new Chart(ctx,{
+      type:"line",
+      data:data,
+      options:{
+
+        maintainAspectRatio:false
+
+      }
+    });
+
+  }
+
+
+
+  $.ajax({
+    url: "http://localhost:5000/transactions",
+    cache: false,
+    success: function(transactions){
+      create_chart(transactions.transactions)
+    }
+  });
+
+
+
+  </script>
+</body>
+</html>
