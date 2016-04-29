@@ -45,8 +45,8 @@ def get_transactions(username,password,start,end):
     endtime = dateparser.parse(end)
     nowtime =datetime.datetime.now()
 
-    if starttime>nowtime or endtime>nowtime:
-        sys.exit("Pick a date thats occurred already")
+    # if starttime>nowtime or endtime>nowtime:
+    #     sys.exit("Pick a date thats occurred already")
     print("Start: "+start+", End: "+end)
 
 
