@@ -35,11 +35,11 @@ def save_tx(t, username):
     db.session.add(new_trans)
     db.session.commit()
 
-
 def get_transactions(username,password,start,end):
     os.system('clear')
     print("Username: "+username+", Password: "+"*"*len(password))
     driver = get_eservices(username,password)
+    print(driver)
 
     starttime = dateparser.parse(start)
     endtime = dateparser.parse(end)

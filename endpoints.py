@@ -4,7 +4,7 @@ from flask import jsonify,request, abort
 from functools import wraps
 from dateutil import parser
 from scraper import scrape
-
+from selenium.common.exceptions import NoSuchElementException
 def check_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -40,6 +40,7 @@ def transactions(username):
             "transactions": [output_transaction(t) for t in transactions]
         }),200
 
+
 @app.route("/scrape",methods=["GET"])
 @check_auth
 def handle_scrape():
@@ -47,7 +48,14 @@ def handle_scrape():
     password = request.authorization.password
     sdate = request.args.get('sdate')
     edate = request.args.get('edate')
-    scrape(username, password, sdate, edate)
+    try:
+        scrape(username, password, sdate, edate)
+    except NoSuchElementException as e:
+        return jsonify({
+            "status": "failure"
+        }),400
+
+
     return jsonify({
         "status": "success"
     }), 200
