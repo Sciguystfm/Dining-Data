@@ -14,7 +14,7 @@ function auth() {
             showCancelButton: true,
             showConfirmButton: true,
             cancelButtonText: 'No',
-            confirmButtonText: 'Fuck yes',
+            confirmButtonText: 'Yes',
             closeOnConfirm: false,
             closeOnCancel: false,
             showLoaderOnConfirm: false
@@ -160,7 +160,7 @@ var chart = c3.generate({
         rescale: true
     },
     color: {
-        pattern: ['#E1E199', '#CC99FF']
+        pattern: ['#F44438', '#68D5E7']
     }
 });
 
