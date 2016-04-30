@@ -12,6 +12,7 @@ The user can focus on one chart, the other, or both at the same time, and they r
 
 
 
+
 #Images
 **The Main Webpage**
 ![](http://imgur.com/3XLnltc.png)
