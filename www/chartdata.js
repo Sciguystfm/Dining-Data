@@ -9,7 +9,7 @@ function auth() {
         showCancelButton: false
     }, function gotUsername(username) {
         swal({
-            title: 'Action',
+            title: 'Update',
             text: 'Do you want to update your transactions now?',
             showCancelButton: true,
             showConfirmButton: true,
@@ -68,7 +68,7 @@ auth();
 function showLoadData(username) {
     swal({
         title: 'User Authenticated',
-        text: 'Click okay to load your data',
+        text: 'Click to load your data',
         showCancelButton: false,
         showConfirmButton: true,
         confirmButtonText: 'Load',
