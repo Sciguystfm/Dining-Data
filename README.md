@@ -3,7 +3,7 @@ A web service that pulls a user's dining transaction data off of RIT's eServices
 
 As a student at RIT, I am forced to use a school currrency known as "Food Debit" to pay for food on campus. From time to time, I'll need to stumble through the school's outdated and unintuitive website to determine how much I have left in my account. Fed up, I did a bit of research and discovered an API that allowed me to pull my raw dining transaction data and make something useful of it.
 
-I created a web app that prompts for a users credentials with SweetAlert, and pulls their dining transaction data using RITs Dining Services API with Selenium with phantomJS. This data is put in a JSON file which is parsed and added into a database created and controled with SQLAlcemy and flask. The data is then requested by a basic webpage through a series of jQuery ajax requests and modeled with a series of c3 graphs.
+I created a web app that prompts for a users credentials with SweetAlert, and pulls their dining transaction data using RITs Dining Services API with Selenium with phantomJS. This data is put in a JSON file which is parsed and added into a database created and controled with SQLAlcemy and flask. The data is then requested by a basic webpage through a series of ajax requests and modeled with a series of c3 graphs.
 Two graphs are created:
 * A line chart showing Food Debit balance over time across two semesters
 * A pie chart showing the users distribution of spent food debit across the schools resturants 
