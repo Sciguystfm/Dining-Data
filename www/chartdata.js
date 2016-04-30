@@ -38,7 +38,7 @@ function auth() {
                             },
                             data: {
                                 sdate: '09/01/2015',
-                                edate: '04/28/2016'
+                                edate: moment().subtract(1, 'days').format('MM/DD/YYYY')
                             },
                             cache: false,
                             success: function(transactions) {
