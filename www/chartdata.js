@@ -267,13 +267,13 @@ function getData(transactions) {
         var startday = moment("2015-12-18")
         var endday = moment("2015-12-21")
         if (day.isBefore(startday)) {
-            if (x1.indexOf(daystr) !=-1 && x2.indexOf(daystr) != -1) {
+            if (x1.indexOf(daystr) ==-1 && x2.indexOf(daystr) == -1) {
                 x1.push(daystr)
                 fall.push(parseFloat(transaction.curBal))
             }
 
         } else if (day.isAfter(endday)) {
-            if (x1.indexOf(daystr) !=-1 && x2.indexOf(daystr) != -1) {
+            if (x1.indexOf(daystr) ==-1 && x2.indexOf(daystr) == -1) {
                 x2.push(daystr)
                 spring.push(parseFloat(transaction.curBal))
             }
