@@ -1,15 +1,16 @@
 from api import app,db
 from models import Transaction
-from flask import jsonify,request, abort
+from flask import jsonify,request, abort, send_from_directory
 from functools import wraps
 from dateutil import parser
 from scraper import scrape
 from selenium.common.exceptions import NoSuchElementException
+import os
 def check_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         # Flask automatically parses auth headers and attaches the .authorization property to the request
-        # (which is why we're using it here instead of the extended headers like x-auth-token)
+        # (which is why we"re using it here instead of the extended headers like x-auth-token)
         auth = request.authorization
 
         if not auth:
@@ -40,14 +41,21 @@ def transactions(username):
             "transactions": [output_transaction(t) for t in transactions]
         }),200
 
+@app.route("/static/<path:path>")
+def send_js(path):
+    return send_from_directory("www", path)
+
+@app.route("/")
+def index():
+    return send_from_directory("www", "index.html")
 
 @app.route("/scrape",methods=["GET"])
 @check_auth
 def handle_scrape():
     username = request.authorization.username
     password = request.authorization.password
-    sdate = request.args.get('sdate')
-    edate = request.args.get('edate')
+    sdate = request.args.get("sdate")
+    edate = request.args.get("edate")
     try:
         scrape(username, password, sdate, edate)
     except NoSuchElementException as e:

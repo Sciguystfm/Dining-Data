@@ -32,7 +32,7 @@ function auth() {
                         showLoaderOnConfirm: true
                     }, function(password) {
                         $.ajax({
-                            url: "http://localhost:5000/scrape",
+                            url: "/scrape",
                             headers: {
                                 authorization: 'Basic ' + btoa(username + ':' + password)
                             },
@@ -75,7 +75,7 @@ function showLoadData(username) {
         showLoaderOnConfirm: true
     }, function() {
         $.ajax({
-            url: "http://localhost:5000/transaction/" + username,
+            url: "/transaction/" + username,
             cache: false,
             success: function(transactions) {
                 getData(transactions.transactions);
