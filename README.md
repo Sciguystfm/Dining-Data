@@ -7,6 +7,8 @@ I created a web app that prompts for a users credentials with SweetAlert, and pu
 Two graphs are created:
 * A line chart showing Food Debit balance over time across two semesters
 * A pie chart showing the users distribution of spent food debit across the schools resturants 
+
+
 The database and site are hosted using Heroku's cloud application platform.
 
 The app can be found at *http://dining.stefanmarchhart.com*
